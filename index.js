@@ -17,13 +17,6 @@ app.use(express.json())
 
 app.use('/api/user', UserRoute)
 
-// const jwtToken = signJWT({
-//   userId: "12134",
-//   userType: "admin",
-// });
-// console.log(jwtToken);
-
-
 async function ConnectDB() {
   try {
     await mongoose.connect(process.env.MONGODB_URI)

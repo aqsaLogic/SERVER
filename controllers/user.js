@@ -1,6 +1,6 @@
 import User from '../model/user.js'
+import encryptjs from 'encryptjs'
 
-// Naya user banao
 export const createUser = async (req, res) => {
   try {
     const { email, password } = req.body
@@ -9,13 +9,15 @@ export const createUser = async (req, res) => {
       return res.status(400).json({ error: 'Email and password required' })
     }
 
-    // Check karo pehle se exist karta hai ya nahi
     const existingUser = await User.findOne({ email })
     if (existingUser) {
       return res.status(400).json({ error: 'User already exists' })
     }
 
-    const user = new User({ email, password })
+    const secretkey = process.env.SECRET_KEY
+    const cipherPassword = encryptjs.encrypt(password, secretkey, 256)
+
+    const user = new User({ email, password: cipherPassword })
     await user.save()
 
     res.status(201).json({ message: 'User created', user })
@@ -25,7 +27,6 @@ export const createUser = async (req, res) => {
   }
 }
 
-// User login kare
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body
@@ -39,7 +40,10 @@ export const loginUser = async (req, res) => {
       return res.status(404).json({ error: 'User not found' })
     }
 
-    if (user.password !== password) {
+    const secretkey = process.env.SECRET_KEY
+    const decipher = encryptjs.decrypt(user.password, secretkey, 256)
+
+    if (decipher !== password) {
       return res.status(401).json({ error: 'Invalid password' })
     }
 
