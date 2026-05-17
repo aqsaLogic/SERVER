@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors({
   origin: [
-    'https://cozy-alfajores-eeb14a.netlify.app',
+    'https://animated-hotteok-f30e15.netlify.app',
     'http://localhost:5173'
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
