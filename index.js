@@ -14,7 +14,7 @@ const app = express()
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: 'https://cozy-alfajores-eeb14a.netlify.app/login',  
+  origin: 'https://cozy-alfajores-eeb14a.netlify.app',  
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }))
 
