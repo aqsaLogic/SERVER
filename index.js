@@ -13,14 +13,17 @@ import ProductRoute from './routes/product.js'
 const app = express()
 const PORT = process.env.PORT || 5000;
 
-app.use(cors())
-app.use(express.json())
+app.use(cors({
+  origin: 'https://cozy-alfajores-eeb14a.netlify.app/login',  
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}))
 
+app.use(express.json())
 app.use('/api/user', UserRoute)
 app.use('/api/products', ProductRoute)
 
 app.get("/", (req, res) => {
-  res.send("🚀 Backend is Running Successfully");
+  res.send("Backend is Running Successfully");
 });
 
 async function ConnectDB() {
