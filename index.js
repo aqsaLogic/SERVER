@@ -19,6 +19,10 @@ app.use(express.json())
 app.use('/api/user', UserRoute)
 app.use('/api/products', ProductRoute)
 
+app.get("/", (req, res) => {
+  res.send("🚀 Backend is Running Successfully");
+});
+
 async function ConnectDB() {
   try {
     await mongoose.connect(process.env.MONGODB_URI)
